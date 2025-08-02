@@ -6,15 +6,18 @@ def game_loop(window):
     # Setup inicial
     curses.curs_set(0)
     personagem = [10, 15]
+    current_direction = curses.KEY_DOWN
 
     while True:
         draw_screen(window)
         draw_actor(actor=personagem, window=window)
         direction = get_new_direction(window=window, timeout=1000)
-        if direction is not None:
-            move_actor(actor=personagem, direction=direction)
+        if direction is None:
+            direction = current_direction
+        move_actor(actor=personagem, direction=direction)
         if actor_hit_border(actor=personagem, window=window):
             return
+        current_direction = direction
 
 
 def draw_screen(window):
